@@ -1,7 +1,8 @@
 import { Either } from 'fp-ts/Either';
 
-export abstract class UseCase<T, Params> {
-    abstract call(params: Params): Promise<Either<Error, T>>;
+export interface UseCase<T, Params> {
+    call(params: Params): Promise<Either<Error, T>>;
 }
 
-export class NoParams {}
+export class NoParams {
+}
