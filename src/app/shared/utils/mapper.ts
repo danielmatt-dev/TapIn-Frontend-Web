@@ -1,5 +1,5 @@
-export abstract class Mapper<Entity, Model> {
+export interface Mapper<Entity, Model> {
 
-    abstract toEntity(model: Model): Entity;
-    abstract toModel(entity: Entity): Model;
+    toEntity(model: Model): Entity;
+    toModel(entity: Entity): Model;
 }
