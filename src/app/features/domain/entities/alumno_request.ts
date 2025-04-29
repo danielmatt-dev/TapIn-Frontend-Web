@@ -36,7 +36,7 @@ export class AlumnoRequest extends AlumnoRequestModel {
 
 export enum TipoAcceso {
     Entrada,
-    Salida
+    Salida,
 }
 
 
