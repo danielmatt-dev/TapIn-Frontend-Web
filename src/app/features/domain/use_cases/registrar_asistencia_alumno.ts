@@ -4,10 +4,11 @@ import { Error } from '../../presentation/pages/auth/error';
 import { DataSourcesRemote } from '../../data/data_sources/remote/data_sources';
 import { Injectable } from '@angular/core';
 import { AlumnoMapperImp } from '../../data/mapper/alumno_mapper_imp';
+import { AlumnoRequest } from '../entities/alumno_request';
 
 @Injectable({ providedIn: 'root' })
 
-class RegistrarAsistenciaAlumno implements UseCase<boolean, AlumnoRequest>{
+export class RegistrarAsistenciaAlumno implements UseCase<boolean, AlumnoRequest>{
     constructor(
         private readonly dataSource: DataSourcesRemote,
         private readonly mapper: AlumnoMapperImp,
