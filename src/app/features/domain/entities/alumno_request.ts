@@ -5,7 +5,7 @@ export class AlumnoRequest extends AlumnoRequestModel {
 
     constructor(
         idNfc?: string,
-        fecha?: string,
+        fecha?: Date,
         hora?: string,
         tipoAcceso?: string
     ) {

@@ -13,6 +13,7 @@ import { AppFloatingConfigurator } from '../../../layout/component/app.floatingc
     standalone: true,
     imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
     templateUrl: './login.component.html',
+
 })
 export class Login {
     email: string = '';

@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import { BloqueResponse } from '../../domain/entities/bloque_response';
 
 export class PeriodoModel {
@@ -10,9 +10,11 @@ export class PeriodoModel {
     @Expose({ name: 'hora_salida' })
     horaSalida: string;
     @Expose({ name: 'fecha_inicio' })
-    fechaInicio: string;
+    @Transform(({ value }) => (value ? new Date(value) : undefined), { toClassOnly: true })
+    fechaInicio?: Date;
     @Expose({ name: 'fecha_final' })
-    fechaFinal: string;
+    @Transform(({ value }) => (value ? new Date(value) : undefined), { toClassOnly: true })
+    fechaFinal?: Date;
     bloques: BloqueResponse[];
     estado?: string;
 
@@ -21,8 +23,8 @@ export class PeriodoModel {
         nombre?: string;
         horaEntrada?: string;
         horaSalida?: string;
-        fechaInicio?: string;
-        fechaFinal?: string;
+        fechaInicio?: Date;
+        fechaFinal?: Date;
         bloques?: BloqueResponse[];
         estado?: string;
     } = {} as any) {
@@ -30,8 +32,8 @@ export class PeriodoModel {
         this.nombre = options.nombre || '';
         this.horaEntrada = options.horaEntrada || '';
         this.horaSalida = options.horaSalida || '';
-        this.fechaInicio = options.fechaInicio || '';
-        this.fechaFinal = options.fechaFinal || '';
+        this.fechaInicio = options.fechaInicio || undefined;
+        this.fechaFinal = options.fechaFinal || undefined;
         this.bloques = options.bloques || [];
         this.estado = options.estado || undefined;
     }
