@@ -5,7 +5,7 @@ export class AlumnoRequest extends AlumnoRequestModel {
 
     constructor(
         idNfc?: string,
-        fecha?: string,
+        fecha?: Date,
         hora?: string,
         tipoAcceso?: string
     ) {
@@ -20,7 +20,7 @@ export class AlumnoRequest extends AlumnoRequestModel {
         }
     }
 
-    set tipoDeAcceso(tipoDeAcceso?: string) {
+    set tipoDeAcceso(tipoDeAcceso: string) {
         if (!tipoDeAcceso) {
             this.tipoAccesoEnum = undefined;
             return;

@@ -1,6 +1,6 @@
 import { Mapper } from '../../../shared/utils/mapper';
 import { AlumnoRequestModel } from '../models/alumno_request.model';
-import { Injectable, model } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AlumnoRequest, TipoAcceso } from '../../domain/entities/alumno_request';
 
 @Injectable({

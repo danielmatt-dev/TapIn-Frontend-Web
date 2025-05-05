@@ -18,7 +18,7 @@ export class BloqueResponse extends BloqueResponseModel {
         }
     }
 
-    set estado(estado?: string) {
+    set estado(estado: string) {
         if (!estado) {
             return this.estadoEnum = undefined;
         }

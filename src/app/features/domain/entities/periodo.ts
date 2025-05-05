@@ -9,8 +9,8 @@ export class Periodo extends PeriodoModel {
         nombre?: string,
         horaEntrada?: string,
         horaSalida?: string,
-        fechaInicio?: string,
-        fechaFinal?: string,
+        fechaInicio?: Date,
+        fechaFinal?: Date,
         bloques?: BloqueResponse[],
         estado?: string
     ) {
