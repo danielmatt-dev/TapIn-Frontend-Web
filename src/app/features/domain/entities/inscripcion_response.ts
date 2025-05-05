@@ -1,44 +1,46 @@
 import { InscripcionResponseModel } from '../../data/models/inscripcion_response.model';
 import { Periodo } from './periodo';
 
-export enum EstadoInscripcion {
-    Activo = 'Activo',
-    Baja   = 'Baja'
-}
-
 export class InscripcionResponse extends InscripcionResponseModel {
     estadoInscripcionEnum?: EstadoInscripcion;
 
-    constructor(options: {
-        idInscripcion?:      string;
-        periodos?:           Periodo[];
-        fecha?:              Date;
-        grado?:              string;
-        grupo?:              string;
-        estadoInscripcion?:  string;
-    } = {}) {
+    constructor(
+        idInscripcion?: string,
+        periodos?: Periodo[],
+        fecha?: Date,
+        grado?: string,
+        grupo?: string,
+        estadoInscripcion?: string
+    ) {
         super({
-            idInscripcion:     options.idInscripcion,
-            periodos:          options.periodos,
-            fecha:             options.fecha,
-            grado:             options.grado,
-            grupo:             options.grupo,
-            estadoInscripcion: options.estadoInscripcion
+            idInscripcion: idInscripcion,
+            periodos: periodos,
+            fecha: fecha,
+            grado: grado,
+            grupo: grupo,
+            estadoInscripcion: estadoInscripcion
         });
 
-        // 2) Si vino estadoInscripcion, convierto a enum
-        if (options.estadoInscripcion) {
-            this.setEstado(options.estadoInscripcion);
+        if (estadoInscripcion != null) {
+            this.estadoDeInscripcion = estadoInscripcion;
         }
     }
 
-    /** Convierte un string a EstadoInscripcion, o deja undefined */
-    private setEstado(value: string) {
-        // “keyof typeof EstadoInscripcion” solo permite "Activo"|"Baja"
-        const key = value as keyof typeof EstadoInscripcion;
-        this.estadoInscripcionEnum =
-            key in EstadoInscripcion
-                ? EstadoInscripcion[key]
-                : undefined;
+    set estadoDeInscripcion(estaadoInscripcion: string) {
+        if (!estaadoInscripcion) {
+            this.estadoInscripcionEnum = undefined;
+            return;
+        }
+        if (estaadoInscripcion === 'Activo') {
+            this.estadoInscripcionEnum = EstadoInscripcion.Activo;
+        }
+        if (estaadoInscripcion === 'Baja') {
+            this.estadoInscripcionEnum = EstadoInscripcion.Baja;
+        }
     }
+}
+
+export enum EstadoInscripcion {
+    Activo,
+    Baja
 }

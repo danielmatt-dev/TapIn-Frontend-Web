@@ -13,7 +13,7 @@ export class InscripcionResponseModel {
     estadoInscripcion?: string;
 
     constructor(options: {
-        idInscripcion?: string;
+        idInscripcion?: string,
         periodos?: Periodo[],
         fecha?: Date;
         grado?: string,
