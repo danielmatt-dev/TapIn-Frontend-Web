@@ -11,14 +11,9 @@ import { AppFloatingConfigurator } from '../../../layout/component/app.floatingc
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
-    templateUrl: './login.component.html',
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule],
+    templateUrl: './login.component.html'
 
 })
 export class Login {
-    email: string = '';
-
-    password: string = '';
-
-    checked: boolean = false;
 }
