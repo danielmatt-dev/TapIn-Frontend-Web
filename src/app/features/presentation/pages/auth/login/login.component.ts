@@ -7,13 +7,17 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../../layout/component/app.floatingconfigurator';
+import { GoogleIconComponent } from '../../../../../../assets/demo/components/google-icon-component';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, GoogleIconComponent],
     templateUrl: './login.component.html'
 
 })
-export class Login {
+export class LoginComponent {
+    onGoogleLogin() {
+
+    }
 }
