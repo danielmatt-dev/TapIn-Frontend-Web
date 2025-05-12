@@ -1,0 +1,43 @@
+/* 1) Deshabilita el scroll de la página */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* 2) Contenedor flex que ocupa toda la ventana */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 3) Header con altura responsiva */
+.responsive-header {
+    flex: 0 0 8vh;               /* 8vh por defecto */
+    width: 100%;
+    background-color: #23456E;
+    position: relative;
+}
+
+@media screen and (min-width: 2300px) {
+    .responsive-header {
+        flex: 0 0 6vh;             /* 6vh en pantallas muy anchas */
+    }
+}
+
+/* 4) Área principal para la imagen de fondo */
+.app-main {
+    flex: 1 1 auto;              /* ocupa resto del espacio */
+    overflow: hidden;            /* recorta lo que sobresalga */
+}
+
+/* 5) Tu recorte y desplazamiento sobre la imagen */
+.app-main .cropped-picture {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+
