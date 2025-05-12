@@ -16,15 +16,15 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withFetch()),
         provideAnimationsAsync(),
         providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
-        importProvidersFrom(
-            TranslateModule.forRoot({
-                defaultLanguage: 'es',
-                loader: {
-                    provide: TranslateLoader,
-                    useFactory: HttpLoaderFactory,
-                    deps: [HttpClient]
-                }
-            })
-        )
+        //importProvidersFrom(
+        //    TranslateModule.forRoot({
+        //        defaultLanguage: 'es',
+        //        loader: {
+        //            provide: TranslateLoader,
+        //            useFactory: HttpLoaderFactory,
+        //            deps: [HttpClient]
+        //        }
+        //    })
+        //)
     ]
 };

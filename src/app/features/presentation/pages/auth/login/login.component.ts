@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
             return;
         }
         window.google.accounts.id.prompt();
+        this.router.navigate(['/dashboard']);
     }
 
     private handleCredentialResponse(response: any) {
