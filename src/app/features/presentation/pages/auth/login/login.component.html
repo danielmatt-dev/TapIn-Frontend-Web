@@ -1,2 +1,46 @@
-<app-floating-configurator />
+<!-- 1) Contenedor flex-column que ocupa toda la ventana -->
+<div class="app-container">
 
+    <!-- 2) Header responsivo (8vh o 6vh según ancho) -->
+    <div class="responsive-header">
+
+        <!-- 2.1) Escudo centrado -->
+        <img
+            src="https://sparkling-pie-8c4bb4.netlify.app/escudoSecundaria.png"
+            alt="Escudo Secundaria"
+            class="absolute left-50"
+            style="top:50%; transform: translate(-50%,-50%); height:5rem; width:5rem;"
+        />
+
+        <!-- 2.2) Botón Google al extremo derecho y verticalmente centrado -->
+        <button
+            pButton
+            pRipple
+            severity="secondary"
+            class="absolute right-3"
+            style="top:50%; transform: translateY(-50%); border-radius:1.5rem;"
+            (click)="onGoogleLogin()"
+        >
+            <svg-google-icon pButtonIcon [size]="{ width:24, height:24 }"></svg-google-icon>
+            <span pButtonLabel class="font-bold">Continuar con Google</span>
+        </button>
+    </div>
+
+    <!-- 3) Main: ocupa el resto de la pantalla y recorta la imagen -->
+    <div class="app-main">
+        <picture class="cropped-picture">
+            <source
+                media="(min-width: 2300px)"
+                srcset="https://sparkling-pie-8c4bb4.netlify.app/portadawebqhd.png"
+            />
+            <source
+                media="(min-width: 1920px)"
+                srcset="https://sparkling-pie-8c4bb4.netlify.app/portadaweb.png"
+            />
+            <img
+                src="https://sparkling-pie-8c4bb4.netlify.app/portadaweb.png"
+                alt="Portada web"
+            />
+        </picture>
+    </div>
+</div>
