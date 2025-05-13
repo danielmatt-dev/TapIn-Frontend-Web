@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: false    // ← ocultas la leyenda
+                display: false
             },
             tooltip: {
                 enabled: true
