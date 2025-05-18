@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     }
 
     onGoogleLogin(): void {
+        this.router.navigate(['/dashboard']);
         if (!this.gsiLoaded) {
             console.error('Google Identity Services aún no están listas.');
             return;
