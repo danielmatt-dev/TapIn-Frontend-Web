@@ -8,11 +8,14 @@ import { NgIf } from '@angular/common';
 import { ChartModule, UIChart } from 'primeng/chart';
 import { ChartData, ChartOptions } from 'chart.js';
 import { data } from 'autoprefixer';
+import { InputText } from 'primeng/inputtext';
+import { Table, TableModule } from 'primeng/table';
+import { AlumnoRequest } from '../../../domain/entities/alumno_request';
 
 @Component({
     selector: 'app-empty',
     standalone: true,
-    imports: [AppFloatingConfigurator, Select, FormsModule, Button, PrimeTemplate, NgIf, UIChart, ChartModule],
+    imports: [AppFloatingConfigurator, Select, FormsModule, Button, PrimeTemplate, NgIf, UIChart, ChartModule, InputText, TableModule],
     templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
@@ -21,22 +24,12 @@ export class DashboardComponent implements OnInit {
     selectedPeriodo: string | undefined;
 
     // Grafico
-    // 1) Datos para el gráfico
-    public barData!: ChartData<'bar'>;
+    barData: any;
+    barOptions: any;
 
-    // 2) Opciones (ejes, leyenda, responsive…)
-    public barOptions: ChartOptions<'bar'> = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                enabled: true
-            }
-        }
-    };
+    // Tabla
+    alumnos: AlumnoRequest[] = []
+    alumnoSeleccionado?: AlumnoRequest;
 
     ngOnInit() {
         this.periodos = [
@@ -45,28 +38,76 @@ export class DashboardComponent implements OnInit {
             { name: 'Ene 25 - Ago 25', code: 'CN' }
         ];
 
-        // 3) Inicializa barData con tus etiquetas y valores
+        this.initChart();
+    }
+
+    initChart() {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
         this.barData = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
                 {
-                    label: 'Ventas 2025',
-                    backgroundColor: '#42A5F5',
-                    borderColor: '#1E88E5',
-                    borderWidth: 1,
-                    data: [65, 59, 80, 81, 56, 55]
+                    label: 'My First dataset',
+                    backgroundColor: documentStyle.getPropertyValue('--p-primary-500'),
+                    borderColor: documentStyle.getPropertyValue('--p-primary-500'),
+                    data: [65, 59, 80, 81, 56, 55, 40]
                 },
                 {
-                    label: 'Ventas 2024',
-                    backgroundColor: '#9CCC65',
-                    borderColor: '#7CB342',
-                    borderWidth: 1,
-                    data: [28, 48, 40, 19, 86, 27]
+                    label: 'My Second dataset',
+                    backgroundColor: documentStyle.getPropertyValue('--p-primary-200'),
+                    borderColor: documentStyle.getPropertyValue('--p-primary-200'),
+                    data: [28, 48, 40, 19, 86, 27, 90]
                 }
             ]
         };
+
+        this.barOptions = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.8,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary,
+                        font: {
+                            weight: 500
+                        }
+                    },
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+            }
+        };
     }
 
-    protected readonly data = data;
+    // Método para aplicar el filtro global
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+
+    onRowSelect(){
+
+    }
 }
 

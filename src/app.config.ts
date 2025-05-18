@@ -6,6 +6,7 @@ import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 import { HttpLoaderFactory } from './app/core/translate.config';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -16,15 +17,15 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withFetch()),
         provideAnimationsAsync(),
         providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
-        //importProvidersFrom(
-        //    TranslateModule.forRoot({
-        //        defaultLanguage: 'es',
-        //        loader: {
-        //            provide: TranslateLoader,
-        //            useFactory: HttpLoaderFactory,
-        //            deps: [HttpClient]
-        //        }
-        //    })
-        //)
+        importProvidersFrom(
+            TranslateModule.forRoot({
+                defaultLanguage: 'es',
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: HttpLoaderFactory,
+                    deps: [HttpClient]
+                }
+            })
+        )
     ]
 };
