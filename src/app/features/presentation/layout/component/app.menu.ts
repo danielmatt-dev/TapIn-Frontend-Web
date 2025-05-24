@@ -19,9 +19,7 @@ import { DatasourceLocalImpl } from '../../../data/data_sources/local/impl/datas
 export class AppMenu implements OnInit {
     model: MenuItem[] = [];
 
-    constructor(private readonly local: DatasourceLocalImpl) {
-
-    }
+    constructor(private readonly local: DatasourceLocalImpl) {}
 
     ngOnInit() {
         /*
@@ -161,14 +159,12 @@ export class AppMenu implements OnInit {
         ];
          */
 
-        console.log(this.local.getRole())
-
         if (this.local.getRole() === 'directivo') {
             this.model = [
                 {
                     items: [
                         { label: 'Dashboard', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/dashboard'] },
-                        { label: 'Dashboard 2', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/dashboard'] },
+                        { label: 'Periodos', icon: 'pi pi-fw pi-calendar', routerLink: ['/periodos'] },
                     ]
                 }
             ]
