@@ -1,13 +1,10 @@
-import { ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
-import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
+import { Component, OnInit } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { PrimeTemplate } from 'primeng/api';
 import { NgIf } from '@angular/common';
 import { ChartModule, UIChart } from 'primeng/chart';
-import { ChartData, ChartOptions } from 'chart.js';
-import { data } from 'autoprefixer';
 import { InputText } from 'primeng/inputtext';
 import { Table, TableModule } from 'primeng/table';
 import { AlumnoRequest } from '../../../domain/entities/alumno_request';
@@ -15,7 +12,7 @@ import { AlumnoRequest } from '../../../domain/entities/alumno_request';
 @Component({
     selector: 'app-empty',
     standalone: true,
-    imports: [AppFloatingConfigurator, Select, FormsModule, Button, PrimeTemplate, NgIf, UIChart, ChartModule, InputText, TableModule],
+    imports: [Select, FormsModule, Button, PrimeTemplate, NgIf, UIChart, ChartModule, InputText, TableModule],
     templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {

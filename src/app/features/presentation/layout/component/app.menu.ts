@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
+import { DatasourceLocalImpl } from '../../../data/data_sources/local/impl/datasource.local.impl';
 
 @Component({
     selector: 'app-menu',
@@ -15,10 +16,15 @@ import { AppMenuitem } from './app.menuitem';
         </ng-container>
     </ul> `
 })
-export class AppMenu {
+export class AppMenu implements OnInit {
     model: MenuItem[] = [];
 
+    constructor(private readonly local: DatasourceLocalImpl) {
+
+    }
+
     ngOnInit() {
+        /*
         this.model = [
             {
                 label: 'Home',
@@ -153,5 +159,19 @@ export class AppMenu {
                 ]
             }
         ];
+         */
+
+        console.log(this.local.getRole())
+
+        if (this.local.getRole() === 'directivo') {
+            this.model = [
+                {
+                    items: [
+                        { label: 'Dashboard', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/dashboard'] },
+                        { label: 'Dashboard 2', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/dashboard'] },
+                    ]
+                }
+            ]
+        }
     }
 }
