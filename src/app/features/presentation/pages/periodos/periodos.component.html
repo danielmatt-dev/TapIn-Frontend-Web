@@ -1,3 +1,92 @@
+<div class="px-20">
+    <p-splitter [panelSizes]="[20, 80]" class="my-4">
+        <ng-template #panel>
+            <div class="flex flex-col gap-2 m-4">
+                <div class="font-bold text-xl">Periodos</div>
+                <p-listbox
+                    [options]="periodoOptions"
+                    [(ngModel)]="selectedPeriodo"
+                    optionLabel="label"
+                    (onChange)="onSelect($event)"
+                    styleClass="w-full"
+                ></p-listbox>
+            </div>
+        </ng-template>
+        <ng-template #panel>
+            <div class="flex flex-col p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Detalle del periodo</h2>
+                    <p-button
+                        label="Añadir Bloque"
+                        icon="pi pi-plus"
+                        (click)="onAddBloque()"
+                    ></p-button>
+                </div>
+
+                <div class="flex flex-col lg:flex-row lg:space-x-6">
+                    <!-- Campos del periodo centrados -->
+                    <div class="flex justify-center w-full lg:w-auto">
+                        <div class="mx-4 space-y-6">
+                            <!-- Primera fila: Nombre, Inicio, Fin -->
+                            <div class="grid grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Nombre</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.nombre }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Inicio</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.inicio }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Fin</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.fin }}</p>
+                                </div>
+                            </div>
+                            <!-- Segunda fila: Hora entrada, Hora salida -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Hora entrada</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.entrada }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Hora salida</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.salida }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de bloques permanece igual -->
+                    <p-table
+                        [value]="allBloques"
+                        selectionMode="single"
+                        [(selection)]="selectedBloque"
+                        dataKey="id_bloque"
+                        styleClass="flex-1"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr class="bg-gray-100">
+                                <th class="p-3 text-left">Mes</th>
+                                <th class="p-3 text-left">Nombre del Bloque</th>
+                                <th class="p-3 text-left">Estado</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-b>
+                            <tr [pSelectableRow]="b" class="hover:bg-gray-50">
+                                <td class="p-3">{{ b.meses }}</td>
+                                <td class="p-3">{{ b.nombre }}</td>
+                                <td class="p-3">{{ b.estado }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </ng-template>
+
+    </p-splitter>
+</div>
+
 <p-dialog
     header="Agregar periodos"
     class="font-bold"
@@ -35,6 +124,7 @@
             >
                 <ng-template pTemplate="header">
                     <tr>
+                        <th>Nombre</th>
                         <th>Inicio de periodo</th>
                         <th>Fin de periodo</th>
                         <th>Hora entrada</th>
@@ -43,6 +133,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-p>
                     <tr [pSelectableRow]="p">
+                        <td>{{ p.nombre }}</td>
                         <td>{{ p.inicio }}</td>
                         <td>{{ p.fin }}</td>
                         <td>{{ p.entrada }}</td>
@@ -66,7 +157,17 @@
     </ng-container>
 
     <ng-container *ngIf="step === 'form'">
-        <div class="grid grid-cols-2 gap-4 p-4 h-full">
+        <div class="p-3">
+            <label class="block font-semibold">Nombre</label>
+            <input
+                pInputText
+                id="nombre"
+                class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                [style]="{width:' 100%' }"
+            />
+        </div>
+        <div class="grid grid-cols-2 gap-4 p-4">
+
             <!-- Inicio de periodo -->
             <div >
                 <label class="block mb-2 font-semibold">Inicio de periodo</label>
@@ -74,6 +175,8 @@
                     [(ngModel)]="fechaInicio"
                     dateFormat="dd/mm/yy"
                     showIcon="true"
+                    class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                    [style]="{width:' 100%' }"
                 ></p-calendar>
             </div>
             <!-- Fin de periodo -->
