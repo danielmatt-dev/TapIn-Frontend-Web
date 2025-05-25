@@ -51,7 +51,6 @@ export class AppTopbar implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.local.setRole('directivo');
         this.showMenu = this.local.getRole() === 'directivo';
     }
 }
