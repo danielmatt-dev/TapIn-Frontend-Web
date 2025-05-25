@@ -1,16 +1,14 @@
 import { UseCase } from '../../../shared/utils/use_case';
 import { Either } from 'fp-ts/Either';
-import { Error } from '../../presentation/pages/auth/error';
-import { DataSourcesRemote } from '../../data/data_sources/remote/data_sources';
 import { Injectable } from '@angular/core';
 import { AlumnoMapperImp } from '../../data/mapper/alumno_mapper_imp';
 import { AlumnoRequest } from '../entities/alumno_request';
+import { DataSourceRemoteImpl } from '../../data/data_sources/remote/impl/data_source_impl';
 
 @Injectable({ providedIn: 'root' })
-
 export class RegistrarAsistenciaAlumno implements UseCase<boolean, AlumnoRequest>{
     constructor(
-        private readonly dataSource: DataSourcesRemote,
+        private readonly dataSource: DataSourceRemoteImpl,
         private readonly mapper: AlumnoMapperImp,
     ) {
     }

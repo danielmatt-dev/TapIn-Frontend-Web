@@ -4,5 +4,4 @@ export interface UseCase<T, Params> {
     call(params: Params): Promise<Either<Error, T>>;
 }
 
-export class NoParams {
-}
+export class NoParams {}

@@ -1,22 +1,18 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { UseCase } from '../../../shared/utils/use_case';
 import { Periodo } from '../entities/periodo';
-import { boolean } from 'fp-ts';
 import { Either } from 'fp-ts/Either';
-import { Error } from '../../presentation/pages/auth/error';
-import { DataSourcesRemote } from '../../data/data_sources/remote/data_sources';
 import { PeriodoMapperImp } from '../../data/mapper/periodo_mapper_imp';
+import { DataSourceRemoteImpl } from '../../data/data_sources/remote/impl/data_source_impl';
 
 @Injectable({
     providedIn: 'root'
 })
-
-export class ActualizarInscripcion implements UseCase<boolean, Periodo> {
+export class ActualizarPeriodo implements UseCase<boolean, Periodo> {
     constructor(
-        private readonly dataSource: DataSourcesRemote,
-        private readonly mapper: PeriodoMapperImp,
-    ) {
-    }
+        private readonly dataSource: DataSourceRemoteImpl,
+        private readonly mapper: PeriodoMapperImp
+    ) {}
 
     async call(params: Periodo): Promise<Either<Error, boolean>> {
         return this.dataSource.actualizarPeriodo(this.mapper.toModel(params))
