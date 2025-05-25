@@ -30,15 +30,4 @@ export class Periodo extends PeriodoModel {
         }
     }
 
-    set estado(estado?: string) {
-        if (!estado) {
-            return this.estadoEnum = undefined;
-        }
-        if (estado === 'Habilitado') {
-            this.estadoEnum = Estado.Habilitado;
-        }
-        if (estado === 'Deshabilitado') {
-            this.estadoEnum = Estado.Deshabilitado;
-        }
-    }
 }

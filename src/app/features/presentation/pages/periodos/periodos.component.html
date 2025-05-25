@@ -1,0 +1,232 @@
+<div class="px-20">
+    <p-splitter [panelSizes]="[20, 80]" class="my-4">
+        <ng-template #panel>
+            <div class="flex flex-col gap-2 m-4">
+                <div class="font-bold text-xl">Periodos</div>
+                <p-listbox
+                    [options]="periodoOptions"
+                    [(ngModel)]="selectedPeriodo"
+                    optionLabel="label"
+                    (onChange)="onSelect($event)"
+                    styleClass="w-full"
+                ></p-listbox>
+            </div>
+        </ng-template>
+        <ng-template #panel>
+            <div class="flex flex-col p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Detalle del periodo</h2>
+                    <p-button
+                        label="Añadir Bloque"
+                        icon="pi pi-plus"
+                        (click)="onAddBloque()"
+                    ></p-button>
+                </div>
+
+                <div class="flex flex-col lg:flex-row lg:space-x-6">
+                    <!-- Campos del periodo centrados -->
+                    <div class="flex justify-center w-full lg:w-auto">
+                        <div class="mx-4 space-y-6">
+                            <!-- Primera fila: Nombre, Inicio, Fin -->
+                            <div class="grid grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Nombre</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.nombre }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Inicio</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.inicio }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Fin</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.fin }}</p>
+                                </div>
+                            </div>
+                            <!-- Segunda fila: Hora entrada, Hora salida -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Hora entrada</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.entrada }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-600">Hora salida</label>
+                                    <p class="mt-1 text-gray-900">{{ selectedPeriodo.salida }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de bloques permanece igual -->
+                    <p-table
+                        [value]="allBloques"
+                        selectionMode="single"
+                        [(selection)]="selectedBloque"
+                        dataKey="id_bloque"
+                        styleClass="flex-1"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr class="bg-gray-100">
+                                <th class="p-3 text-left">Mes</th>
+                                <th class="p-3 text-left">Nombre del Bloque</th>
+                                <th class="p-3 text-left">Estado</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-b>
+                            <tr [pSelectableRow]="b" class="hover:bg-gray-50">
+                                <td class="p-3">{{ b.meses }}</td>
+                                <td class="p-3">{{ b.nombre }}</td>
+                                <td class="p-3">{{ b.estado }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </ng-template>
+
+    </p-splitter>
+</div>
+
+<p-dialog
+    header="Agregar periodos"
+    class="font-bold"
+    [modal]="true"
+    [(visible)]="showDialog"
+    [style]="{ width: '40rem', 'min-width': '20rem', 'max-width': '70rem', 'overflow-x': 'hidden', 'padding': '0.5rem' }"
+    (onHide)="cerrarVentana()">
+
+    <ng-container *ngIf="step === 'empty'">
+        <div class="flex flex-col items-center justify-center p-8">
+            <!-- Icono central -->
+            <i class="pi pi-exclamation-circle text-gray-400 mb-4 text-8xl"></i>
+            <!-- Mensaje -->
+            <div class="text-2xl font-semibold text-gray-700 mb-4">
+                Sin periodos disponibles
+            </div>
+
+            <!-- Botón -->
+            <p-button
+                label="Agregar periodo"
+                (click)="loadPeriodos()"
+            ></p-button>
+        </div>
+    </ng-container>
+
+    <!-- Tabla de periodos -->
+    <ng-container *ngIf="step === 'table'">
+        <div>
+            <p-table
+                [value]="periodos"
+                selectionMode="single"
+                [(selection)]="selectedPeriodo"
+                dataKey="id"
+                class="w-full text-sm"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Inicio de periodo</th>
+                        <th>Fin de periodo</th>
+                        <th>Hora entrada</th>
+                        <th>Hora salida</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-p>
+                    <tr [pSelectableRow]="p">
+                        <td>{{ p.nombre }}</td>
+                        <td>{{ p.inicio }}</td>
+                        <td>{{ p.fin }}</td>
+                        <td>{{ p.entrada }}</td>
+                        <td>{{ p.salida }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <div class="flex justify-end gap-4 mt-6">
+                <p-button
+                    [outlined]="true"
+                    label="Agregar periodo"
+                    (click)="onAddNewPeriodo()"
+                ></p-button>
+                <p-button
+                    label="Aceptar"
+                    (click)="onAccept()"
+                ></p-button>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="step === 'form'">
+        <div class="p-3">
+            <label class="block font-semibold">Nombre</label>
+            <input
+                pInputText
+                id="nombre"
+                class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                [style]="{width:' 100%' }"
+            />
+        </div>
+        <div class="grid grid-cols-2 gap-4 p-4">
+
+            <!-- Inicio de periodo -->
+            <div >
+                <label class="block mb-2 font-semibold">Inicio de periodo</label>
+                <p-calendar
+                    [(ngModel)]="fechaInicio"
+                    dateFormat="dd/mm/yy"
+                    showIcon="true"
+                    class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                    [style]="{width:' 100%' }"
+                ></p-calendar>
+            </div>
+            <!-- Fin de periodo -->
+            <div>
+                <label class="block mb-2 font-semibold">Fin de periodo</label>
+                <p-calendar
+                    [(ngModel)]="fechaFin"
+                    dateFormat="dd/mm/yy"
+                    showIcon="true"
+                    class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                    [style]="{width:' 100%' }"
+                ></p-calendar>
+            </div>
+            <!-- Hora entrada -->
+            <div>
+                <label class="block mb-2 font-semibold">Hora entrada</label>
+                <p-calendar
+                    [(ngModel)]="horaEntrada"
+                    timeOnly="true"
+                    hourFormat="12"
+                    showIcon="true"
+                    class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                    [style]="{width:' 100%' }"
+                ></p-calendar>
+            </div>
+            <!-- Hora salida -->
+            <div>
+                <label class="block mb-2 font-semibold">Hora salida</label>
+                <p-calendar
+                    [(ngModel)]="horaSalida"
+                    timeOnly="true"
+                    hourFormat="12"
+                    showIcon="true"
+                    class="w-full sm:w-[21rem] md:w-[18rem] lg:w-[18rem] xl:w-[18rem]"
+                    [style]="{width:' 100%' }"
+                ></p-calendar>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-4 mt-2">
+            <p-button
+                [outlined]="true"
+                label="Cancelar"
+                (click)="cancelForm()"
+            ></p-button>
+            <p-button
+                label="Aceptar"
+                (click)="acceptForm()"
+            ></p-button>
+        </div>
+    </ng-container>
+
+</p-dialog>

@@ -16,18 +16,26 @@ export class PeriodoModel {
     @Transform(({ value }) => (value ? new Date(value) : undefined), { toClassOnly: true })
     fechaFinal?: Date;
     bloques: BloqueResponse[];
-    estado?: string;
+    private _estado?: string | undefined;
+    public get estado(): string | undefined {
+        return this._estado;
+    }
+    public set estado(value: string | undefined) {
+        this._estado = value;
+    }
 
-    constructor(options: {
-        idPeriodo?: string;
-        nombre?: string;
-        horaEntrada?: string;
-        horaSalida?: string;
-        fechaInicio?: Date;
-        fechaFinal?: Date;
-        bloques?: BloqueResponse[];
-        estado?: string;
-    } = {} as any) {
+    constructor(
+        options: {
+            idPeriodo?: string;
+            nombre?: string;
+            horaEntrada?: string;
+            horaSalida?: string;
+            fechaInicio?: Date;
+            fechaFinal?: Date;
+            bloques?: BloqueResponse[];
+            estado?: string;
+        } = {} as any
+    ) {
         this.idPeriodo = options.idPeriodo || undefined;
         this.nombre = options.nombre || '';
         this.horaEntrada = options.horaEntrada || '';
