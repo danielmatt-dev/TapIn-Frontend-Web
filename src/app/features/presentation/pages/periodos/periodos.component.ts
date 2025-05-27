@@ -20,7 +20,7 @@ import { SplitterModule } from 'primeng/splitter';
     styleUrl: './periodos.component.scss'
 })
 export class PeriodosComponent implements OnInit {
-    showDialog = false;
+    showDialog = true;
 
     step: 'empty' | 'table' | 'form' = 'empty';
     fechaInicio!: Date;
