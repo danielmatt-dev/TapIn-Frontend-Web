@@ -1,18 +1,42 @@
-import { AsistenciasRespondeModel } from '../../data/models/asistencias_response.model';
-import { AlumnoRequest } from './alumno_request';
-import { InscripcionResponse } from './inscripcion_response';
+import { AsistenciaResponseModel, AsistenciasRespondeModel } from '../../data/models/asistencias_response.model';
 import { AlertaResponse } from './alerta_response';
 
-export class AsistenciaResponse extends AsistenciasRespondeModel {
+export class AsistenciasResponse extends AsistenciasRespondeModel {
     constructor(
-        alumnos: AlumnoRequest[],
-        inscripciones: InscripcionResponse[],
+        asistencias: AsistenciaResponse[],
         alertas: AlertaResponse[],
     ) {
         super({
-            alumnos: alumnos,
-            inscripciones: inscripciones,
+            asistencias: asistencias,
             alertas: alertas,
+        });
+    }
+}
+
+export class AsistenciaResponse extends AsistenciaResponseModel {
+    constructor(
+        idRegistroAsistencia?: number,
+        alumno?: string,
+        correo?: string,
+        grado?: string,
+        grupo?: string,
+        fecha?: string,
+        hora?: string,
+        tipoRegistro?: string,
+        tipoAcceso?: string,
+        estado?: string
+    ) {
+        super({
+            idRegistroAsistencia: idRegistroAsistencia,
+            alumno: alumno,
+            correo: correo,
+            grado: grado,
+            grupo: grupo,
+            fecha: fecha,
+            hora: hora,
+            tipoRegistro: tipoRegistro,
+            tipoAcceso: tipoAcceso,
+            estado: estado
         });
     }
 }
