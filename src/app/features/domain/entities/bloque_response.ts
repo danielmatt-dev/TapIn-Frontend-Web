@@ -18,17 +18,6 @@ export class BloqueResponse extends BloqueResponseModel {
         }
     }
 
-    set estado(estado: string) {
-        if (!estado) {
-            return this.estadoEnum = undefined;
-        }
-        if (estado === 'Habilitado') {
-            this.estadoEnum = Estado.Habilitado;
-        }
-        if (estado === 'Deshabilitado') {
-            this.estadoEnum = Estado.Deshabilitado;
-        }
-    }
 }
 
 export enum Estado {

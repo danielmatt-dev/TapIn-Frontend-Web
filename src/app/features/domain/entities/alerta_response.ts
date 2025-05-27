@@ -5,11 +5,13 @@ export class AlertaResponse extends AlertaResponseModel {
         idAlerta?: string,
         titulo?: string,
         descripcion?: string,
+        tipo?: string
     ) {
         super({
             idAlerta: idAlerta,
             titulo: titulo,
             descripcion: descripcion,
+            tipo: tipo
         });
     }
 }

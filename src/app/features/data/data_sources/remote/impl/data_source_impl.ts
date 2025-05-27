@@ -1,10 +1,10 @@
 import { DataSourcesRemote } from '../data_sources';
 import { Either, left, right } from 'fp-ts/Either';
 import { AlumnoRequestModel } from '../../../models/alumno_request.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PeriodoModel } from '../../../models/periodo.model';
-import { AsistenciaResponse } from '../../../../domain/entities/asistencia_response';
+import { AsistenciasResponse } from '../../../../domain/entities/asistencia_response';
 import { DataSourceEndpoints } from './data_source.endpoints';
 import {catchError, map} from "rxjs/operators";
 import {firstValueFrom, of} from "rxjs";
@@ -14,11 +14,14 @@ import {
     BadRequestException, ForbiddenException, InternalServerException,
     ResourceNotFoundException, TimeoutException
 } from '../../../../../shared/exceptions/exceptions';
+import { AsistenciaResponseModel } from '../../../models/asistencias_response.model';
+import { AlertaResponseModel } from '../../../models/alerta_response.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataSourceRemoteImpl implements DataSourcesRemote {
+
     constructor(private readonly http: HttpClient) {}
 
     buscarPeriodos(): Promise<Either<Error, PeriodoModel[]>> {
@@ -135,17 +138,25 @@ export class DataSourceRemoteImpl implements DataSourcesRemote {
         );
     }
 
-    async buscarAsistencias(): Promise<Either<Error, AsistenciaResponse[]>> {
+    async buscarAsistencias(fechaInicio: string, fechaFin: string): Promise<Either<Error, AsistenciasResponse>> {
         const url = DataSourceEndpoints.getAsistencias;
+        const params = new HttpParams()
+            .set('fecha_inicio', fechaInicio)
+            .set('fecha_fin',    fechaFin)
 
         return firstValueFrom(
             this.http
-                .get<any[]>(url)
+                .get(url, { params })
                 .pipe(
-                    map((response: AsistenciaResponse[]) => {
-                        const asistencias = response.map((p) =>
-                            plainToInstance(AsistenciaResponse, p))
-                        return right(asistencias)
+                    map((response: any) => {
+
+                        const asistencias = response.asistencias.map((p: any) =>
+                            plainToInstance(AsistenciaResponseModel, p))
+
+                        const alertas = response.alertas.map((p: any) =>
+                            plainToInstance(AlertaResponseModel, p))
+
+                        return right(new AsistenciasResponse(asistencias, alertas))
                     }),
                     catchError((error: HttpErrorResponse) => {
                         let exception: Error = new Error(error.message);
