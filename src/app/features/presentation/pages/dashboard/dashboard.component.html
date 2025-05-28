@@ -36,8 +36,22 @@
         </div>
     </div>
     <div class="col-span-3" style="height:40vh;"> <!-- Div 2 -->
-        <div class="card h-full">
+        <div class="card pr-3 h-full flex flex-col">
             <p class="text-2xl font-bold">Notificaciones</p>
+            <ul class="p-0 m-0 list-none flex-1 overflow-y-auto space-y-3">
+                <li *ngFor="let alerta of notifications" class="flex items-center py-2 border-b border-surface">
+                    <!-- círculo redondo con icono -->
+                    <div
+                        class="h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-full mr-4 shrink-0"
+                        style="width: 40px; height: 40px"
+                    >
+                        <i class="pi pi-exclamation-triangle !text-xl text-blue-500"></i>
+                    </div>
+                    <span class="text-surface-900 dark:text-surface-0 leading-normal">
+                        {{ alerta.descripcion }}
+                    </span>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="col-span-12" style="height:46vh;">

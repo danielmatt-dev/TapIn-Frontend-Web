@@ -2,39 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { PrimeTemplate } from 'primeng/api';
-import { NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ChartModule, UIChart } from 'primeng/chart';
 import { InputText } from 'primeng/inputtext';
 import { Table, TableModule } from 'primeng/table';
 import { BuscarAsistencias, BuscarAsistenciasParams } from '../../../domain/use_cases/buscar_asistencias';
 import { AsistenciaResponse } from '../../../domain/entities/asistencia_response';
+import { AlertaResponse } from '../../../domain/entities/alerta_response';
 
 @Component({
     selector: 'app-empty',
     standalone: true,
-    imports: [Select, FormsModule, PrimeTemplate, NgIf, UIChart, ChartModule, InputText, TableModule],
+    imports: [Select, FormsModule, PrimeTemplate, NgIf, UIChart, ChartModule, InputText, TableModule, NgForOf],
     templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
-
     es: any = {
         firstDayOfWeek: 1,
-        dayNames: ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],
-        dayNamesShort: ['dom','lun','mar','mié','jue','vie','sáb'],
-        dayNamesMin: ['D','L','M','X','J','V','S'],
-        monthNames: [
-            'enero','febrero','marzo','abril','mayo','junio',
-            'julio','agosto','septiembre','octubre','noviembre','diciembre'
-        ],
-        monthNamesShort: [
-            'ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'
-        ],
+        dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+        dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+        monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
         today: 'Hoy',
         clear: 'Limpiar',
         dateFormat: 'yy-mm-dd'
     };
 
-    value: any
+    value: any;
 
     // Select
     periodos: any[] = [
@@ -64,7 +59,15 @@ export class DashboardComponent implements OnInit {
     barOptions: any;
     tiposRegistro = ['Normal', 'Justificada', 'Extraordinario', 'Tardío'];
     monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    paleta: string[] = [];
+
+    notifications: AlertaResponse[] = [
+        new AlertaResponse(1, 'Título 1', 'Esta es la descripción de alerta 1', 'info'),
+        new AlertaResponse(2, 'Título 2', 'Esta es la descripción de alerta 2', 'warning'),
+        new AlertaResponse(3, 'Título 3', 'Esta es la descripción de alerta 3', 'error'),
+        new AlertaResponse(1, 'Título 1', 'Esta es la descripción de alerta 1', 'info'),
+        new AlertaResponse(2, 'Título 2', 'Esta es la descripción de alerta 2', 'warning'),
+        new AlertaResponse(3, 'Título 3', 'Esta es la descripción de alerta 3', 'error')
+    ];
 
     // Tabla
     asistencias: AsistenciaResponse[] = [];
@@ -170,9 +173,7 @@ export class DashboardComponent implements OnInit {
         }
         const item = new Date(value);
         // Elimina hora para comparar solo fecha
-        return item.setHours(0,0,0,0) === filter.setHours(0,0,0,0);
+        return item.setHours(0, 0, 0, 0) === filter.setHours(0, 0, 0, 0);
     }
-
-
 }
 
