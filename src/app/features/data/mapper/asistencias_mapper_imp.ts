@@ -8,7 +8,7 @@ export class AsistenciasResponseMapperImp implements Mapper<AsistenciasResponse,
 
     toEntity(model: AsistenciasRespondeModel): AsistenciasResponse {
         return new AsistenciasResponse(
-            model.asistencias,
+            model.asistencias.map((asistencia) => asistencia.toDomain()),
             model.alertas
         );
     }

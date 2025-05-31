@@ -57,11 +57,19 @@ export class AsistenciaResponseModel {
         this.correo = options.correo ?? ''
         this.grado = options.grado ?? ''
         this.grupo = options.grupo ?? ''
-        this.fecha = options.fecha ?? ''
+        this.fecha                 = options.fecha ?? '';
         this.hora = options.hora ?? ''
         this.tipoRegistro = options.tipoRegistro ?? ''
         this.tipoAcceso = options.tipoAcceso ?? ''
         this.estado = options.estado ?? ''
+    }
+
+    private formatDate(raw: string): string {
+        if (!raw) return '';
+        const parts = raw.split('-');
+        if (parts.length !== 3) return raw;
+        const [year, month, day] = parts;
+        return `${day}/${month}/${year}`;
     }
 
 }

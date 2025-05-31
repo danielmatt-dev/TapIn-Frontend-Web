@@ -57,17 +57,7 @@ export class DashboardComponent implements OnInit {
     // Grafico
     barData: any;
     barOptions: any;
-    tiposRegistro = ['Normal', 'Justificada', 'Extraordinario', 'Tardío'];
-    monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-    notifications: AlertaResponse[] = [
-        new AlertaResponse(1, 'Título 1', 'Esta es la descripción de alerta 1', 'info'),
-        new AlertaResponse(2, 'Título 2', 'Esta es la descripción de alerta 2', 'warning'),
-        new AlertaResponse(3, 'Título 3', 'Esta es la descripción de alerta 3', 'error'),
-        new AlertaResponse(1, 'Título 1', 'Esta es la descripción de alerta 1', 'info'),
-        new AlertaResponse(2, 'Título 2', 'Esta es la descripción de alerta 2', 'warning'),
-        new AlertaResponse(3, 'Título 3', 'Esta es la descripción de alerta 3', 'error')
-    ];
+    notifications: AlertaResponse[] = [];
 
     // Tabla
     asistencias: AsistenciaResponse[] = [];
@@ -91,6 +81,7 @@ export class DashboardComponent implements OnInit {
         if (eitherAsistencias._tag === 'Right') {
             console.log(eitherAsistencias.right);
             this.asistenciasFiltradas = eitherAsistencias.right.asistencias;
+            this.notifications = eitherAsistencias.right.alertas
         }
 
         this.initChart();
