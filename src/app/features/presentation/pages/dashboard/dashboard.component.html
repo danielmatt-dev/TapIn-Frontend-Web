@@ -59,11 +59,16 @@
                     <div class="border-round-2xl">
                         <p-button icon="pi pi-download" severity="secondary"/>
                     </div>
+                    <div class="border-round-2xl">
+                        <p-button icon="pi pi-pen-to-square" severity="secondary"/>
+                    </div>
                 </div>
             </div>
             <div class="mt-5">
                 <p-table #dt1
                          [value]="alumnos"
+                         (sortFunction)="customSort($event)"
+                         [customSort]="true"
                          selectionMode="single"
                          [(selection)]="alumnoSeleccionado"
                          dataKey="folio"
@@ -72,13 +77,27 @@
                          [tableStyle]="{ 'width': '100%' }">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th scope="col">Nombre completo</th>
-                            <th scope="col">Correo</th>
-                            <th scope="col">Grado</th>
-                            <th scope="col">Grupo</th>
-                            <th scope="col">Acceso</th>
-                            <th scope="col">Hora</th>
-                            <th scope="col">Tipo de Registro</th>
+                            <th pSortableColumn="nombreCompleto">
+                                Nombre completo <p-sortIcon field="nombreCompleto"/>
+                            </th>
+                            <th pSortableColumn="correo">
+                                Correo <p-sortIcon field="correo"/>
+                            </th>
+                            <th pSortableColumn="grado">
+                                Grado <p-sortIcon field="grado"/>
+                            </th>
+                            <th pSortableColumn="grupo">
+                                Grupo <p-sortIcon field="grupo"/>
+                            </th>
+                            <th pSortableColumn="acceso">
+                                Acceso <p-sortIcon field="acceso"/>
+                            </th>
+                            <th pSortableColumn="hora">
+                                Hora <p-sortIcon field="hora"/>
+                            </th>
+                            <th pSortableColumn="tipoRegistro">
+                                Tipo de Registro <p-sortIcon field="tipoRegistro"/>
+                            </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-paciente>
